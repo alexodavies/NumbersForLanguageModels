@@ -1,0 +1,4 @@
+requests
+openai
+google-genai
+voyageai
