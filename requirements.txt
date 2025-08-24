@@ -2,3 +2,5 @@ requests
 openai
 google-genai
 voyageai
+seaborn
+scikit-learn

@@ -54,8 +54,8 @@ class EmbeddingWrapper:
     }
     
     GOOGLE_MODELS = {
-        'gemini-embedding-001',
-        'gemini-embedding-exp-03-07'
+        'gemini-embedding-001'
+        # 'gemini-embedding-exp-03-07'
     }
     
     VOYAGE_MODELS = {
@@ -155,10 +155,10 @@ class EmbeddingWrapper:
         return [item.embedding for item in response.data]
     
     def _google_embed(self, 
-                      text: Union[str, List[str]], 
-                      model: str,
-                      **kwargs) -> List[List[float]]:
-        """Get embeddings from Google Gemini."""
+                    text: Union[str, List[str]], 
+                    model: str,
+                    **kwargs) -> List[List[float]]:
+        """Get embeddings from Google Gemini with proper batching."""
         if not self.google_client:
             if not GOOGLE_AVAILABLE:
                 raise ImportError("Google genai package not available. Install with: pip install google-genai")
@@ -170,6 +170,9 @@ class EmbeddingWrapper:
                 dim = output_dimensionality or 3072
                 return [[0.0] * dim for _ in texts]
         
+        # Convert single string to list for consistent processing
+        texts = [text] if isinstance(text, str) else text
+        
         # Prepare config
         task_type = kwargs.get('task_type', 'SEMANTIC_SIMILARITY')
         config_params = {'task_type': task_type}
@@ -178,13 +181,45 @@ class EmbeddingWrapper:
         
         config = types.EmbedContentConfig(**config_params)
         
-        result = self.google_client.models.embed_content(
-            model=model,
-            contents=text,
-            config=config
-        )
+        # Google's batch limit is 100 requests
+        GOOGLE_BATCH_SIZE = 100
+        all_embeddings = []
         
-        return [list(emb.values) for emb in result.embeddings]
+        # Process in batches
+        for i in range(0, len(texts), GOOGLE_BATCH_SIZE):
+            batch = texts[i:i + GOOGLE_BATCH_SIZE]
+            
+            # Add small delay between batches to respect rate limits
+            if i > 0:
+                import time
+                time.sleep(0.1)
+            
+            try:
+                result = self.google_client.models.embed_content(
+                    model=model,
+                    contents=batch,
+                    config=config
+                )
+                
+                batch_embeddings = [list(emb.values) for emb in result.embeddings]
+                all_embeddings.extend(batch_embeddings)
+                
+            except Exception as e:
+                # If batch fails, try one by one (for debugging)
+                print(f"Batch failed with {len(batch)} items, trying individually: {e}")
+                for single_text in batch:
+                    try:
+                        single_result = self.google_client.models.embed_content(
+                            model=model,
+                            contents=[single_text],
+                            config=config
+                        )
+                        all_embeddings.extend([list(emb.values) for emb in single_result.embeddings])
+                    except Exception as single_e:
+                        print(f"Failed on single text: {single_e}")
+                        raise single_e
+        
+        return all_embeddings
     
     def _voyage_embed(self, 
                       text: Union[str, List[str]], 

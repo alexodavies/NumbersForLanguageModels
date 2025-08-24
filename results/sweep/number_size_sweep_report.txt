@@ -1,0 +1,24 @@
+NUMBER SIZE SWEEP RESULTS
+========================================
+
+EXPERIMENT: POSITIVE_DECIMALS
+------------------------------
+Average Linear R²: 0.985
+Performance trend: stable (Δ = -0.021)
+
+EXPERIMENT: MIXED_SIGN_DECIMALS
+------------------------------
+Average Linear R²: 0.965
+Performance trend: stable (Δ = -0.045)
+
+EXPERIMENT: MIXED_INT_DECIMAL
+------------------------------
+Average Linear R²: 0.925
+Performance trend: declining (Δ = -0.093)
+
+KEY INSIGHTS:
+• Larger numbers generally become harder to embed
+• PCA Component 1 shows how much numerical info is in the primary direction
+• Cumulative variance (top 5) shows total numerical info captured
+• Check plots for detailed performance and variance curves
+• CSV contains all 5 PCA components for detailed analysis
