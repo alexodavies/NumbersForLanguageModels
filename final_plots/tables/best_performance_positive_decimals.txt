@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+\caption{Best Performing Models by Size - Positive Decimals}
+\label{tab:best_positive_decimals}
+\begin{tabular}{ccccc}
+\toprule
+Size & Best Linear Model & Linear R² & Best PCA Model & PCA R² \\
+\midrule
+1 & gemini-embedding-001 & 1.0000 & voyage-code-3 & 0.9517 \\
+2 & text-embedding-3-large & 1.0000 & voyage-code-3 & 0.9572 \\
+3 & voyage-law-2 & 0.9993 & voyage-3-large & 0.9592 \\
+4 & voyage-law-2 & 0.9967 & voyage-code-3 & 0.9616 \\
+5 & voyage-3-large & 0.9980 & voyage-3-large & 0.9495 \\
+6 & voyage-3-large & 0.9973 & voyage-code-3 & 0.9602 \\
+7 & voyage-law-2 & 0.9971 & voyage-code-3 & 0.9616 \\
+8 & voyage-law-2 & 0.9958 & voyage-3-large & 0.9721 \\
+9 & voyage-3-large & 0.9979 & voyage-law-2 & 0.9588 \\
+10 & voyage-3-large & 0.9979 & voyage-code-3 & 0.9738 \\
+11 & voyage-3-large & 0.9969 & voyage-code-3 & 0.9674 \\
+12 & voyage-3-large & 0.9983 & voyage-law-2 & 0.9735 \\
+13 & voyage-3-large & 0.9974 & voyage-code-3 & 0.9685 \\
+14 & voyage-law-2 & 0.9972 & voyage-law-2 & 0.9673 \\
+15 & voyage-3-large & 0.9980 & voyage-3-large & 0.9692 \\
+16 & voyage-3-large & 0.9974 & voyage-law-2 & 0.9693 \\
+17 & voyage-law-2 & 0.9968 & voyage-code-3 & 0.9802 \\
+18 & voyage-3-large & 0.9977 & voyage-code-3 & 0.9663 \\
+19 & voyage-code-3 & 0.9966 & voyage-code-3 & 0.9743 \\
+\bottomrule
+\end{tabular}
+\end{table}

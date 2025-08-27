@@ -161,7 +161,7 @@ class NumberSizeSweep:
                         random_state=self.config.random_state
                     )
 
-                    vis_pca(embeddings, values, f"plots/sweep/pca_vis/{experiment_name}-{model}-{size}.png")
+                    # vis_pca(embeddings, values, f"plots/sweep/pca_vis/{experiment_name}-{model}-{size}.png")
                     
                     # Store results
                     model_results['sizes'].append(size)
@@ -293,7 +293,7 @@ class NumberSizeSweep:
                         random_state=self.config.random_state
                     )
 
-                    vis_pca(embeddings, values, f"plots/sweep/pca_vis/mixed-decimals-integers-{model}-{int_size}.png")
+                    # vis_pca(embeddings, values, f"plots/sweep/pca_vis/mixed-decimals-integers-{model}-{int_size}.png")
                     
                     # Store results
                     model_results['sizes'].append(int_size)
@@ -387,7 +387,7 @@ class NumberSizeSweep:
         ax1.set_title(f'Linear Performance - {exp_name}')
         ax1.legend()
         ax1.grid(True, alpha=0.3)
-        ax1.set_ylim(0, 1)
+        # ax1.set_ylim(0, 1)
         
         # Plot 2: PCA performance (component 1 only)
         for model, model_results in results['models'].items():

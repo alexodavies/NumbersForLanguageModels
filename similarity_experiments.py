@@ -41,10 +41,11 @@ class SimilarityConfig:
             self.decimal_sizes = [i for i in range(1, 15)]
         if self.magnitude_ranges is None:
             self.magnitude_ranges = [
-                (0.001, 0.999),   # Small decimals
-                (1, 99),          # Small integers
-                (100, 9999),      # Medium numbers
-                (10000, 999999)   # Large numbers
+                (0.00001, 0.99999),   # Small decimals
+                (0.00001, 0.49999)
+                # (1, 99),          # Small integers
+                # (100, 9999),      # Medium numbers
+                # (10000, 999999)   # Large numbers
             ]
         
         os.makedirs(self.plot_dir, exist_ok=True)
@@ -317,11 +318,11 @@ class SimilarityExperiments:
                         print(f"    Accuracy (±0.2): {evaluation['accuracy_within_tolerance']:.3f}")
                         print(f"    MAE: {evaluation['mean_absolute_error']:.3f}")
                         
-                        # Create visualization for this configuration
-                        self._plot_similarity_distribution(
-                            similarities, -1.0, 
-                            f"{experiment_name}_{model}_{decimal_size}_{mag_range[0]}-{mag_range[1]}"
-                        )
+                        # # Create visualization for this configuration
+                        # self._plot_similarity_distribution(
+                        #     similarities, -1.0, 
+                        #     f"{experiment_name}_{model}_{decimal_size}_{mag_range[0]}-{mag_range[1]}"
+                        # )
                         
                     except Exception as e:
                         print(f"    ❌ Error: {e}")
@@ -340,7 +341,7 @@ class SimilarityExperiments:
     def run_scaling_relationship_sweep(self, scale_factors: List[float] = None) -> Dict[str, Any]:
         """Test preservation of scaling relationships (a = scale * b)."""
         if scale_factors is None:
-            scale_factors = [2.0, 3.0, 0.5]
+            scale_factors = [2.0]
         
         all_results = {}
         
@@ -425,11 +426,11 @@ class SimilarityExperiments:
                             print(f"    Accuracy (±0.2): {evaluation['accuracy_within_tolerance']:.3f}")
                             print(f"    MAE: {evaluation['mean_absolute_error']:.3f}")
                             
-                            # Create visualization for this configuration
-                            self._plot_similarity_distribution(
-                                similarities, 1.0, 
-                                f"{experiment_name}_{model}_{decimal_size}_{mag_range[0]}-{mag_range[1]}"
-                            )
+                            # # Create visualization for this configuration
+                            # self._plot_similarity_distribution(
+                            #     similarities, 1.0, 
+                            #     f"{experiment_name}_{model}_{decimal_size}_{mag_range[0]}-{mag_range[1]}"
+                            # )
                             
                         except Exception as e:
                             print(f"    ❌ Error: {e}")
@@ -514,79 +515,364 @@ class SimilarityExperiments:
         print("\n" + "="*80)
         print("PHASE 2: SCALING RELATIONSHIPS")
         print("="*80)
-        scaling_results = self.run_scaling_relationship_sweep([2.0, 3.0, 0.5, 10.0])
+        scaling_results = self.run_scaling_relationship_sweep([2.0])
         all_results.update(scaling_results)
         
         return all_results
     
     def plot_summary_results(self) -> None:
-        """Create summary plots across all experiments."""
+            """Create summary plots across all experiments."""
+            if not self.results:
+                print("No results to plot")
+                return
+            
+            print("\n📈 Creating summary plots...")
+            
+            # Create summary subfolder
+            summary_dir = os.path.join(self.config.plot_dir, "summary")
+            os.makedirs(summary_dir, exist_ok=True)
+            
+            # 1. Individual MAE comparison plots for each experiment
+            print("Creating individual MAE comparison plots...")
+            self._plot_accuracy_comparison(summary_dir)
+            
+            # 2. Detailed MAE plots showing magnitude ranges
+            print("Creating detailed MAE plots by magnitude range...")
+            self._plot_accuracy_comparison_detailed(summary_dir)
+            
+            # 3. Mean similarity deviation from expected (heatmap)
+            print("Creating similarity deviations heatmap...")
+            self._plot_similarity_deviations(summary_dir)
+            
+            # 4. Model performance ranking for similarity preservation
+            print("Creating model rankings plot...")
+            self._plot_model_similarity_rankings(summary_dir)
+            
+            # 5. Decimal size vs accuracy analysis
+            print("Creating decimal size vs accuracy analysis...")
+            self._plot_size_vs_accuracy_analysis(summary_dir)
+            # else:
+            #     print(f"  ⚠️  No valid data for {exp_name}")
+            #     plt.close()
+
+    def _plot_accuracy_comparison_detailed(self, save_dir: str) -> None:
+        """Plot detailed MAE comparison with separate plots for each magnitude range, colored by provider."""
         if not self.results:
             print("No results to plot")
             return
         
-        print("\n📈 Creating summary plots...")
+        # Extract provider information from model names
+        def extract_provider(model_name: str) -> str:
+            """Extract provider from model name based on API wrapper model mappings."""
+            # Use the wrapper's model mappings to determine provider
+            if hasattr(self.wrapper, 'OPENAI_MODELS') and model_name in self.wrapper.OPENAI_MODELS:
+                return 'OpenAI'
+            elif hasattr(self.wrapper, 'GOOGLE_MODELS') and model_name in self.wrapper.GOOGLE_MODELS:
+                return 'Google'
+            elif hasattr(self.wrapper, 'VOYAGE_MODELS') and model_name in self.wrapper.VOYAGE_MODELS:
+                return 'Voyage AI'
+            else:
+                # Fallback to string matching for models not in the wrapper
+                model_lower = model_name.lower()
+                if any(keyword in model_lower for keyword in ['openai', 'gpt', 'text-embedding']):
+                    return 'OpenAI'
+                elif any(keyword in model_lower for keyword in ['google', 'gemini', 'palm']):
+                    return 'Google'
+                elif any(keyword in model_lower for keyword in ['voyage']):
+                    return 'Voyage AI'
+                elif any(keyword in model_lower for keyword in ['anthropic', 'claude']):
+                    return 'Anthropic'
+                elif any(keyword in model_lower for keyword in ['cohere']):
+                    return 'Cohere'
+                elif any(keyword in model_lower for keyword in ['mistral']):
+                    return 'Mistral'
+                elif any(keyword in model_lower for keyword in ['meta', 'llama']):
+                    return 'Meta'
+                elif any(keyword in model_lower for keyword in ['huggingface', 'hf']):
+                    return 'HuggingFace'
+                else:
+                    return 'Other'
         
-        # Create summary subfolder
-        summary_dir = os.path.join(self.config.plot_dir, "summary")
-        os.makedirs(summary_dir, exist_ok=True)
+        # Define provider colors (updated for actual providers)
+        provider_colors = {
+            'OpenAI': '#10B981',      # Green
+            'Google': '#3B82F6',      # Blue  
+            'Voyage AI': '#8B5CF6',   # Purple
+            'Anthropic': '#F59E0B',   # Amber (fallback)
+            'Cohere': '#EC4899',      # Pink (fallback)
+            'Mistral': '#EF4444',     # Red (fallback)
+            'Meta': '#6366F1',        # Indigo (fallback)
+            'HuggingFace': '#14B8A6', # Teal (fallback)
+            'Other': '#6B7280'        # Gray
+        }
         
-        # 1. Accuracy comparison across experiments
-        self._plot_accuracy_comparison(summary_dir)
+        # Get all unique magnitude ranges across all experiments
+        all_magnitude_ranges = set()
+        for exp_results in self.results.values():
+            for model_results in exp_results['models'].values():
+                all_magnitude_ranges.update(model_results['magnitude_ranges'])
         
-        # 2. Mean similarity deviation from expected
-        self._plot_similarity_deviations(summary_dir)
+        all_magnitude_ranges = sorted(list(all_magnitude_ranges))
         
-        # 3. Model performance ranking for similarity preservation
-        self._plot_model_similarity_rankings(summary_dir)
-        
-        # 4. Decimal size vs accuracy analysis
-        self._plot_size_vs_accuracy_analysis(summary_dir)
-    
-    def _plot_accuracy_comparison(self, save_dir: str) -> None:
-        """Plot MAE comparison across different experiments."""
-        fig, axes = plt.subplots(2, 2, figsize=(16, 12))
-        axes = axes.flatten()
-        
-        plot_idx = 0
+        # Create separate plots for each experiment and magnitude range combination
         for exp_name, exp_results in self.results.items():
-            if plot_idx >= 4:
-                break
+            expected_sim = exp_results.get('expected_similarity', 'N/A')
+            scale_factor = exp_results.get('scale_factor', 'N/A')
             
-            ax = axes[plot_idx]
+            # Get magnitude ranges present in this experiment
+            exp_magnitude_ranges = set()
+            for model_results in exp_results['models'].values():
+                exp_magnitude_ranges.update(model_results['magnitude_ranges'])
+            exp_magnitude_ranges = sorted(list(exp_magnitude_ranges))
+            
+            # Create subplots - one for each magnitude range
+            n_ranges = len(exp_magnitude_ranges)
+            if n_ranges == 0:
+                continue
+                
+            # Determine subplot layout
+            if n_ranges == 1:
+                fig, axes = plt.subplots(1, 1, figsize=(10, 6))
+                axes = [axes]  # Make it a list for consistent indexing
+            elif n_ranges == 2:
+                fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+            else:
+                # For more ranges, use a grid layout
+                n_cols = min(3, n_ranges)
+                n_rows = (n_ranges + n_cols - 1) // n_cols
+                fig, axes = plt.subplots(n_rows, n_cols, figsize=(5*n_cols, 5*n_rows))
+                if n_rows == 1:
+                    axes = axes if n_ranges > 1 else [axes]
+                else:
+                    axes = axes.flatten()
+            
+            # Process each magnitude range
+            for range_idx, mag_range in enumerate(exp_magnitude_ranges):
+                ax = axes[range_idx]
+                plotted_models = 0
+                
+                # Group models by provider for consistent coloring
+                provider_models = {}
+                for model_name in exp_results['models'].keys():
+                    provider = extract_provider(model_name)
+                    if provider not in provider_models:
+                        provider_models[provider] = []
+                    provider_models[provider].append(model_name)
+                
+                # Plot each provider's models
+                for provider, models in provider_models.items():
+                    provider_color = provider_colors.get(provider, provider_colors['Other'])
+                    
+                    for model_idx, model_name in enumerate(models):
+                        model_results = exp_results['models'][model_name]
+                        
+                        # Extract data for this specific magnitude range
+                        range_decimal_sizes = []
+                        range_mae_values = []
+                        
+                        for size, m_range, mae in zip(model_results['decimal_sizes'], 
+                                                    model_results['magnitude_ranges'], 
+                                                    model_results['mae_values']):
+                            if m_range == mag_range and not np.isnan(mae):
+                                range_decimal_sizes.append(size)
+                                range_mae_values.append(mae)
+                        
+                        if range_decimal_sizes and range_mae_values:
+                            # Use different line styles and markers for multiple models from same provider
+                            linestyle_options = ['-', '--', '-.', ':']
+                            marker_options = ['o', 's', '^', 'D', 'v', '<', '>', 'p', '*', 'h']
+                            
+                            linestyle = linestyle_options[model_idx % len(linestyle_options)]
+                            marker = marker_options[model_idx % len(marker_options)]
+                            
+                            # Create more distinctive model names for legend
+                            simple_model_name = model_name.split('/')[-1] if '/' in model_name else model_name
+                            
+                            # Extract key model identifiers for cleaner labels
+                            if 'text-embedding-3-small' in model_name:
+                                model_label = 'embed-3-small'
+                            elif 'text-embedding-3-large' in model_name:
+                                model_label = 'embed-3-large'
+                            elif 'text-embedding-ada-002' in model_name:
+                                model_label = 'ada-002'
+                            elif 'gemini-embedding-001' in model_name:
+                                model_label = 'gemini-001'
+                            elif 'voyage-3.5-lite' in model_name:
+                                model_label = 'v3.5-lite'
+                            elif 'voyage-3.5' in model_name:
+                                model_label = 'v3.5'
+                            elif 'voyage-3-large' in model_name:
+                                model_label = 'v3-large'
+                            elif 'voyage-code-3' in model_name:
+                                model_label = 'code-3'
+                            elif 'voyage-finance-2' in model_name:
+                                model_label = 'finance-2'
+                            elif 'voyage-law-2' in model_name:
+                                model_label = 'law-2'
+                            elif 'voyage-multimodal-3' in model_name:
+                                model_label = 'multimodal-3'
+                            else:
+                                model_label = simple_model_name
+                            
+                            # Create label: show provider only if single model, otherwise show both
+                            if len(models) == 1:
+                                label = f"{provider}"
+                            else:
+                                label = f"{provider}: {model_label}"
+                            
+                            ax.plot(range_decimal_sizes, range_mae_values, 
+                                marker=marker, label=label, linewidth=2, alpha=0.8, 
+                                color=provider_color, markersize=6, linestyle=linestyle)
+                            plotted_models += 1
+                
+                if plotted_models > 0:
+                    ax.set_xlabel('Decimal Size (digits after decimal)', fontsize=11)
+                    ax.set_ylabel('MAE (Mean Absolute Error)', fontsize=11)
+                    ax.set_title(f'Range: {mag_range}\n(Lower MAE = Better)', fontsize=12, fontweight='bold')
+                    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
+                    ax.grid(True, alpha=0.3)
+                    
+                    # Set y-limit dynamically for this range
+                    if range_mae_values:
+                        y_max = max([max(model_results['mae_values']) 
+                                for model_results in exp_results['models'].values() 
+                                if any(m_range == mag_range and not np.isnan(mae) 
+                                        for m_range, mae in zip(model_results['magnitude_ranges'], 
+                                                            model_results['mae_values']))])
+                        # if not np.isnan(y_max):
+                        #     ax.set_ylim(0, y_max * 1.1)
+                    
+                    # Add horizontal reference line at mae=0
+                    ax.axhline(y=0, color='gray', linestyle='-', alpha=0.5, linewidth=1)
+                else:
+                    ax.text(0.5, 0.5, f'No data for\n{mag_range}', 
+                        ha='center', va='center', transform=ax.transAxes,
+                        fontsize=12, bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.5))
+                    ax.set_title(f'Range: {mag_range}', fontsize=12)
+            
+            # Hide empty subplots
+            if n_ranges < len(axes):
+                for i in range(n_ranges, len(axes)):
+                    axes[i].set_visible(False)
+            
+            # Create overall title for the figure
+            title_parts = [f'{exp_name.replace("_", " ").title()} - MAE by Magnitude Range']
+            if expected_sim != 'N/A':
+                title_parts.append(f'Expected Similarity: {expected_sim}')
+            if scale_factor != 'N/A':
+                title_parts.append(f'Scale Factor: {scale_factor}')
+            
+            fig.suptitle('\n'.join(title_parts), fontsize=16, fontweight='bold', y=0.98)
+            
+            # Add provider color legend at the bottom
+            provider_legend_elements = []
+            for provider, color in provider_colors.items():
+                if any(extract_provider(model) == provider 
+                    for model_results in exp_results['models'] 
+                    for model in exp_results['models'].keys()):
+                    provider_legend_elements.append(plt.Line2D([0], [0], color=color, lw=3, label=provider))
+            
+            if provider_legend_elements:
+                fig.legend(handles=provider_legend_elements, 
+                        title='Providers', 
+                        loc='lower center', 
+                        bbox_to_anchor=(0.5, -0.02),
+                        ncol=len(provider_legend_elements),
+                        fontsize=10)
+            
+            plt.tight_layout()
+            plt.subplots_adjust(top=0.85, bottom=0.15)  # Make room for title and legend
+            
+            # Save with experiment-specific filename
+            safe_exp_name = exp_name.replace('/', '_').replace('(', '').replace(')', '').replace(',', '_').replace(' ', '_')
+            filename = f"mae_detailed_by_range_{safe_exp_name}.png"
+            filepath = os.path.join(save_dir, filename)
+            plt.savefig(filepath, dpi=300, bbox_inches='tight')
+            print(f"  📈 Saved detailed MAE plot by range: {filepath}")
+            plt.close()
+
+            
+    def _plot_accuracy_comparison(self, save_dir: str) -> None:
+        """Plot MAE comparison for each experiment separately."""
+        if not self.results:
+            print("No results to plot")
+            return
+        
+        # Create separate plot for each experiment
+        for exp_name, exp_results in self.results.items():
+            fig, ax = plt.subplots(figsize=(12, 8))
+            
+            expected_sim = exp_results.get('expected_similarity', 'N/A')
+            scale_factor = exp_results.get('scale_factor', 'N/A')
             
             # Collect data for this experiment
-            for model_name, model_results in exp_results['models'].items():
-                mae_values = [mae for mae in model_results['mae_values'] if not np.isnan(mae)]
-                decimal_sizes = [size for size, mae in zip(model_results['decimal_sizes'], model_results['mae_values']) 
-                               if not np.isnan(mae)]
+            plotted_models = 0
+            colors = plt.cm.Set1(np.linspace(0, 1, len(exp_results['models'])))
+            
+            for idx, (model_name, model_results) in enumerate(exp_results['models'].items()):
+                mae_values = []
+                decimal_sizes = []
+                magnitude_ranges = []
+                
+                # Group by decimal size and average across magnitude ranges
+                size_mae_map = {}
+                for size, mag_range, mae in zip(model_results['decimal_sizes'], 
+                                            model_results['magnitude_ranges'], 
+                                            model_results['mae_values']):
+                    if not np.isnan(mae):
+                        if size not in size_mae_map:
+                            size_mae_map[size] = []
+                        size_mae_map[size].append(mae)
+                
+                # Calculate averages for each decimal size
+                for size in sorted(size_mae_map.keys()):
+                    decimal_sizes.append(size)
+                    mae_values.append(np.mean(size_mae_map[size]))
                 
                 if mae_values and decimal_sizes:
-                    ax.plot(decimal_sizes, mae_values, marker='o', label=model_name, linewidth=2, alpha=0.8)
+                    ax.plot(decimal_sizes, mae_values, marker='o', label=model_name, 
+                        linewidth=2, alpha=0.8, color=colors[idx], markersize=6)
+                    plotted_models += 1
             
-            ax.set_xlabel('Decimal Size')
-            ax.set_ylabel('MAE (Mean Absolute Error)')
-            ax.set_title(f'{exp_name}\nExpected similarity: {exp_results.get("expected_similarity", "N/A")}')
-            ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-            ax.grid(True, alpha=0.3)
-            ax.set_ylim(0, 2)  # MAE ranges from 0 to 2 for cosine similarity
-            
-            # Add interpretation text
-            ax.text(0.02, 0.98, 'Lower = Better', transform=ax.transAxes, fontsize=9,
-                   verticalalignment='top', bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.7))
-            
-            plot_idx += 1
+            if plotted_models > 0:
+                ax.set_xlabel('Decimal Size (digits after decimal point)', fontsize=12)
+                ax.set_ylabel('MAE (Mean Absolute Error)', fontsize=12)
+                
+                # Create detailed title
+                title_parts = [f'{exp_name.replace("_", " ").title()}']
+                if expected_sim != 'N/A':
+                    title_parts.append(f'Expected Similarity: {expected_sim}')
+                if scale_factor != 'N/A':
+                    title_parts.append(f'Scale Factor: {scale_factor}')
+                
+                ax.set_title('\n'.join(title_parts), fontsize=14, fontweight='bold')
+                ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+                ax.grid(True, alpha=0.3)
+                
+                # Set y-limit with some padding
+                y_max = max([max(model_results['mae_values']) for model_results in exp_results['models'].values() 
+                            if any(not np.isnan(mae) for mae in model_results['mae_values'])])
+                # if not np.isnan(y_max):
+                #     ax.set_ylim(0, y_max * 1.1)
+                
+                # Add interpretation text
+                ax.text(0.02, 0.98, 'Lower MAE = Better Similarity Preservation', 
+                    transform=ax.transAxes, fontsize=10, verticalalignment='top',
+                    bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.7))
+                
+                # Add horizontal line at mae=0 for reference
+                ax.axhline(y=0, color='gray', linestyle='-', alpha=0.5, linewidth=1)
+                
+                plt.tight_layout()
+                
+                # Save with experiment-specific filename
+                safe_exp_name = exp_name.replace('/', '_').replace('(', '').replace(')', '').replace(',', '_').replace(' ', '_')
+                filename = f"mae_comparison_{safe_exp_name}.png"
+                filepath = os.path.join(save_dir, filename)
+                plt.savefig(filepath, dpi=300, bbox_inches='tight')
+                print(f"  📈 Saved MAE plot: {filepath}")
+                plt.close()
         
-        # Hide unused subplots
-        for i in range(plot_idx, 4):
-            axes[i].set_visible(False)
-        
-        plt.suptitle('MAE Comparison Across Similarity Experiments\n(Lower MAE = Better Similarity Preservation)', 
-                     fontsize=16, fontweight='bold')
-        plt.tight_layout()
-        plt.savefig(os.path.join(save_dir, "mae_comparison.png"), dpi=300, bbox_inches='tight')
-        plt.close()
-    
     def _plot_similarity_deviations(self, save_dir: str) -> None:
         """Plot mean absolute error (deviation from expected) across experiments."""
         fig, ax = plt.subplots(figsize=(14, 8))
@@ -725,7 +1011,7 @@ class SimilarityExperiments:
         ax.set_ylabel('Average MAE (Mean Absolute Error)')
         ax.set_title('Effect of Number Precision on Similarity Preservation Error\n(Average across all experiments and models)')
         ax.grid(True, alpha=0.3)
-        ax.set_ylim(0, max(means) * 1.1 if means else 2)  # Dynamic y-limit based on data
+        # ax.set_ylim(0, max(means) * 1.1 if means else 2)  # Dynamic y-limit based on data
         
         # Add trend line
         if len(sizes) > 1:

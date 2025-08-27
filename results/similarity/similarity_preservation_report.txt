@@ -1,0 +1,45 @@
+EMBEDDING SIMILARITY PRESERVATION RESULTS
+============================================================
+
+Total experiments conducted: 616
+Relationship types tested: 2
+
+EXPERIMENT: NEGATIVE_RELATIONSHIPS
+----------------------------------------
+Expected similarity: -1.0
+Average accuracy: 0.000 ± 0.000
+Average MAE: 1.898 ± 0.058
+Average similarity: 0.898 ± 0.058
+Assessment: POOR - Little relationship preservation
+
+EXPERIMENT: SCALING_RELATIONSHIPS_2.0X
+----------------------------------------
+Expected similarity: 1.0
+Scale factor: 2.0
+Average accuracy: 0.822 ± 0.346
+Average MAE: 0.110 ± 0.096
+Average similarity: 0.890 ± 0.096
+Assessment: EXCELLENT - Strong relationship preservation
+
+MODEL PERFORMANCE COMPARISON:
+--------------------------------------------------
+Rank  Model                     Avg Accuracy Std     
+--------------------------------------------------
+1     text-embedding-ada-002    0.500        0.500
+2     gemini-embedding-001      0.500        0.500
+3     voyage-finance-2          0.500        0.500
+4     voyage-3.5                0.500        0.500
+5     voyage-3.5-lite           0.500        0.500
+6     voyage-code-3             0.499        0.499
+7     voyage-3-large            0.499        0.499
+8     voyage-law-2              0.457        0.467
+9     text-embedding-3-small    0.149        0.178
+10    text-embedding-3-large    0.006        0.012
+
+KEY INSIGHTS:
+• Mathematical relationships in embeddings:
+  - Negative relationships (a = -b): 0.0% accuracy
+  - Scaling relationships (a = 2.0*b): 82.2% accuracy
+• Higher precision numbers may be harder to embed correctly
+• Some models preserve mathematical relationships better than others
+• Check individual plots for detailed similarity distributions

@@ -1,0 +1,40 @@
+\begin{table}[htbp]
+\caption{Model-Level Correlation with Precision (Size)}
+\label{tab:model_correlations}
+\begin{tabular}{llcccc}
+\toprule
+Experiment & Model & Provider & Size vs Linear R² & Size vs PCA R² & Size vs PCA Var \\
+\midrule
+Positive Decimals & gemini-embedding-001 & Google & -0.703 & -0.388 & -0.694 \\
+Positive Decimals & text-embedding-3-large & OpenAI & -0.899 & 0.081 & -0.665 \\
+Positive Decimals & text-embedding-3-small & OpenAI & -0.745 & -0.114 & -0.566 \\
+Positive Decimals & text-embedding-ada-002 & OpenAI & -0.706 & 0.421 & -0.591 \\
+Positive Decimals & voyage-3-large & Voyage & -0.105 & 0.579 & 0.103 \\
+Positive Decimals & voyage-3.5 & Voyage & -0.846 & -0.843 & -0.420 \\
+Positive Decimals & voyage-3.5-lite & Voyage & -0.565 & 0.682 & -0.204 \\
+Positive Decimals & voyage-code-3 & Voyage & -0.502 & 0.542 & 0.095 \\
+Positive Decimals & voyage-finance-2 & Voyage & -0.849 & 0.556 & -0.455 \\
+Positive Decimals & voyage-law-2 & Voyage & -0.763 & 0.538 & 0.445 \\
+Mixed Sign Decimals & gemini-embedding-001 & Google & -0.891 & 0.768 & -0.584 \\
+Mixed Sign Decimals & text-embedding-3-large & OpenAI & -0.833 & 0.214 & -0.804 \\
+Mixed Sign Decimals & text-embedding-3-small & OpenAI & -0.804 & 0.275 & -0.389 \\
+Mixed Sign Decimals & text-embedding-ada-002 & OpenAI & -0.789 & 0.130 & -0.366 \\
+Mixed Sign Decimals & voyage-3-large & Voyage & -0.587 & 0.185 & 0.747 \\
+Mixed Sign Decimals & voyage-3.5 & Voyage & -0.629 & -0.038 & -0.256 \\
+Mixed Sign Decimals & voyage-3.5-lite & Voyage & -0.351 & 0.218 & 0.844 \\
+Mixed Sign Decimals & voyage-code-3 & Voyage & -0.620 & -0.004 & 0.858 \\
+Mixed Sign Decimals & voyage-finance-2 & Voyage & -0.856 & 0.030 & -0.326 \\
+Mixed Sign Decimals & voyage-law-2 & Voyage & -0.705 & 0.378 & 0.811 \\
+Mixed Int Decimal & gemini-embedding-001 & Google & -0.889 & -0.754 & -0.706 \\
+Mixed Int Decimal & text-embedding-3-large & OpenAI & -0.829 & 0.253 & -0.745 \\
+Mixed Int Decimal & text-embedding-3-small & OpenAI & -0.600 & 0.302 & -0.599 \\
+Mixed Int Decimal & text-embedding-ada-002 & OpenAI & -0.783 & 0.672 & -0.538 \\
+Mixed Int Decimal & voyage-3-large & Voyage & -0.537 & 0.321 & 0.859 \\
+Mixed Int Decimal & voyage-3.5 & Voyage & -0.493 & 0.204 & -0.011 \\
+Mixed Int Decimal & voyage-3.5-lite & Voyage & -0.513 & 0.163 & 0.850 \\
+Mixed Int Decimal & voyage-code-3 & Voyage & -0.814 & 0.221 & 0.961 \\
+Mixed Int Decimal & voyage-finance-2 & Voyage & -0.348 & 0.160 & 0.407 \\
+Mixed Int Decimal & voyage-law-2 & Voyage & -0.688 & 0.038 & 0.635 \\
+\bottomrule
+\end{tabular}
+\end{table}

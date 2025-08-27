@@ -12,6 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from sklearn.metrics import r2_score
 from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
 
 
 class PCAAnalyzer:
@@ -133,9 +134,17 @@ def evaluate_pca_reconstruction(embeddings: List[List[float]],
         train_component = train_pca.flatten()
         test_component = test_pca.flatten()
         
-        # Calculate R² for reconstruction
-        train_r2 = r2_score(y_train, train_component)
-        test_r2 = r2_score(y_test, test_component)
+        # Fit linear model: values = slope * component + intercept
+        reg = LinearRegression()
+        reg.fit(train_component.reshape(-1, 1), y_train)
+
+        # Make predictions
+        train_pred = reg.predict(train_component.reshape(-1, 1))
+        test_pred = reg.predict(test_component.reshape(-1, 1))
+
+        # Calculate proper R² scores
+        train_r2 = r2_score(y_train, train_pred)
+        test_r2 = r2_score(y_test, test_pred)
         
         # If negative, try flipping the component
         if test_r2 < 0:

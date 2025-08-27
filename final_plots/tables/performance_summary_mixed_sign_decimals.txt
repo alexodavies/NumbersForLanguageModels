@@ -1,0 +1,13 @@
+\begin{table}[htbp]
+\caption{Performance Summary - Mixed Sign Decimals}
+\label{tab:perf_mixed_sign_decimals}
+\begin{tabular}{lccccc}
+\toprule
+Provider & Models & Linear R² (μ±σ) & PCA R² (μ±σ) & PCA Var Comp 1 (μ±σ) \\
+\midrule
+Google & 1 & 0.965±0.018 & 0.579±0.252 & 0.044±0.026 \\
+OpenAI & 3 & 0.921±0.049 & 0.730±0.033 & 0.174±0.028 \\
+Voyage & 6 & 0.986±0.026 & 0.758±0.034 & 0.423±0.058 \\
+\bottomrule
+\end{tabular}
+\end{table}
