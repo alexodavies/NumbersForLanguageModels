@@ -1,0 +1,310 @@
+Periodicity Analysis Summary
+========================================
+
+Configuration:
+  Samples per range: 1000
+  Magnitude ranges: [(10, 100), (100, 1000), (1000, 10000), (10000, 100000)]
+  Models analyzed: 10
+
+Model: text-embedding-ada-002
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 6.0450
+    Spectral centroid: 0.1674
+    Total power: 59.7575
+    Embedding dims: 1536
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 5.8946
+    Spectral centroid: 0.1886
+    Total power: 58.5833
+    Embedding dims: 1536
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 6.1612
+    Spectral centroid: 0.1957
+    Total power: 61.4318
+    Embedding dims: 1536
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 6.1091
+    Spectral centroid: 0.1970
+    Total power: 60.8150
+    Embedding dims: 1536
+
+
+Model: text-embedding-3-large
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 4.6857
+    Spectral centroid: 0.1748
+    Total power: 51.7603
+    Embedding dims: 3072
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 4.5533
+    Spectral centroid: 0.1941
+    Total power: 51.5544
+    Embedding dims: 3072
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 4.7298
+    Spectral centroid: 0.2013
+    Total power: 51.7367
+    Embedding dims: 3072
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 4.6664
+    Spectral centroid: 0.2125
+    Total power: 51.1643
+    Embedding dims: 3072
+
+
+Model: text-embedding-3-small
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 6.6273
+    Spectral centroid: 0.1753
+    Total power: 105.4656
+    Embedding dims: 1536
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 6.9690
+    Spectral centroid: 0.1863
+    Total power: 107.4813
+    Embedding dims: 1536
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 7.3980
+    Spectral centroid: 0.1903
+    Total power: 108.3307
+    Embedding dims: 1536
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 7.2748
+    Spectral centroid: 0.2017
+    Total power: 107.6199
+    Embedding dims: 1536
+
+
+Model: gemini-embedding-001
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 4.7832
+    Spectral centroid: 0.1693
+    Total power: 35.5434
+    Embedding dims: 3072
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 4.7147
+    Spectral centroid: 0.1897
+    Total power: 35.0242
+    Embedding dims: 3072
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 4.6965
+    Spectral centroid: 0.1960
+    Total power: 35.0130
+    Embedding dims: 3072
+
+
+Model: voyage-finance-2
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.3529
+    Spectral centroid: 0.1349
+    Total power: 191.0244
+    Embedding dims: 1024
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.2916
+    Spectral centroid: 0.1492
+    Total power: 191.1859
+    Embedding dims: 1024
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.7269
+    Spectral centroid: 0.1512
+    Total power: 195.0138
+    Embedding dims: 1024
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.8131
+    Spectral centroid: 0.1560
+    Total power: 195.4174
+    Embedding dims: 1024
+
+
+Model: voyage-code-3
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.4700
+    Spectral centroid: 0.1505
+    Total power: 189.2434
+    Embedding dims: 1024
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.3910
+    Spectral centroid: 0.1581
+    Total power: 188.1282
+    Embedding dims: 1024
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.6039
+    Spectral centroid: 0.1645
+    Total power: 189.6060
+    Embedding dims: 1024
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.5594
+    Spectral centroid: 0.1726
+    Total power: 188.6611
+    Embedding dims: 1024
+
+
+Model: voyage-law-2
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 10.3728
+    Spectral centroid: 0.1592
+    Total power: 181.7304
+    Embedding dims: 1024
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 10.2522
+    Spectral centroid: 0.1826
+    Total power: 179.1972
+    Embedding dims: 1024
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 10.5383
+    Spectral centroid: 0.1892
+    Total power: 181.3510
+    Embedding dims: 1024
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 10.8239
+    Spectral centroid: 0.1893
+    Total power: 183.5066
+    Embedding dims: 1024
+
+
+Model: voyage-3-large
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.4821
+    Spectral centroid: 0.1344
+    Total power: 189.2383
+    Embedding dims: 1024
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.4527
+    Spectral centroid: 0.1432
+    Total power: 189.3566
+    Embedding dims: 1024
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.7120
+    Spectral centroid: 0.1436
+    Total power: 191.4023
+    Embedding dims: 1024
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.8055
+    Spectral centroid: 0.1547
+    Total power: 192.8151
+    Embedding dims: 1024
+
+
+Model: voyage-3.5-lite
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.7279
+    Spectral centroid: 0.1350
+    Total power: 188.0129
+    Embedding dims: 1024
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.6801
+    Spectral centroid: 0.1512
+    Total power: 186.9187
+    Embedding dims: 1024
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.8025
+    Spectral centroid: 0.1479
+    Total power: 186.9573
+    Embedding dims: 1024
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.8480
+    Spectral centroid: 0.1433
+    Total power: 187.2105
+    Embedding dims: 1024
+
+
+Model: voyage-3.5
+------------------------------
+  Range 10-100:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.6505
+    Spectral centroid: 0.1332
+    Total power: 182.5771
+    Embedding dims: 1024
+
+  Range 100-1000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.5352
+    Spectral centroid: 0.1278
+    Total power: 182.0437
+    Embedding dims: 1024
+
+  Range 1000-10000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.8546
+    Spectral centroid: 0.1319
+    Total power: 184.9979
+    Embedding dims: 1024
+
+  Range 10000-100000:
+    Peak frequency: 0.0000
+    Peak magnitude: 11.8872
+    Spectral centroid: 0.1388
+    Total power: 185.4628
+    Embedding dims: 1024
+

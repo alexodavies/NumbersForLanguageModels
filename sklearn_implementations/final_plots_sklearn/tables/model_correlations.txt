@@ -1,0 +1,40 @@
+\begin{table}[htbp]
+\caption{Model-Level Correlation with Precision (Size)}
+\label{tab:model_correlations}
+\begin{tabular}{llcccc}
+\toprule
+Experiment & Model & Provider & Size vs Linear R² & Size vs PCA R² & Size vs PCA Var \\
+\midrule
+Positive Decimals Kfold & gemini-embedding-001 & Google & -0.840 & -0.549 & -0.691 \\
+Positive Decimals Kfold & text-embedding-3-large & OpenAI & -0.878 & -0.030 & -0.659 \\
+Positive Decimals Kfold & text-embedding-3-small & OpenAI & -0.784 & -0.132 & -0.566 \\
+Positive Decimals Kfold & text-embedding-ada-002 & OpenAI & -0.716 & 0.428 & -0.590 \\
+Positive Decimals Kfold & voyage-3-large & Voyage & -0.411 & 0.538 & 0.092 \\
+Positive Decimals Kfold & voyage-3.5 & Voyage & -0.843 & -0.854 & -0.407 \\
+Positive Decimals Kfold & voyage-3.5-lite & Voyage & -0.725 & 0.737 & -0.188 \\
+Positive Decimals Kfold & voyage-code-3 & Voyage & -0.593 & 0.624 & 0.105 \\
+Positive Decimals Kfold & voyage-finance-2 & Voyage & -0.916 & 0.520 & -0.440 \\
+Positive Decimals Kfold & voyage-law-2 & Voyage & -0.786 & 0.472 & 0.443 \\
+Mixed Sign Decimals Kfold & gemini-embedding-001 & Google & -0.920 & 0.789 & -0.595 \\
+Mixed Sign Decimals Kfold & text-embedding-3-large & OpenAI & -0.858 & 0.486 & -0.804 \\
+Mixed Sign Decimals Kfold & text-embedding-3-small & OpenAI & -0.848 & 0.468 & -0.398 \\
+Mixed Sign Decimals Kfold & text-embedding-ada-002 & OpenAI & -0.799 & 0.392 & -0.378 \\
+Mixed Sign Decimals Kfold & voyage-3-large & Voyage & -0.553 & 0.456 & 0.705 \\
+Mixed Sign Decimals Kfold & voyage-3.5 & Voyage & -0.730 & 0.312 & -0.261 \\
+Mixed Sign Decimals Kfold & voyage-3.5-lite & Voyage & -0.503 & 0.331 & 0.836 \\
+Mixed Sign Decimals Kfold & voyage-code-3 & Voyage & -0.454 & 0.432 & 0.839 \\
+Mixed Sign Decimals Kfold & voyage-finance-2 & Voyage & -0.885 & 0.307 & -0.345 \\
+Mixed Sign Decimals Kfold & voyage-law-2 & Voyage & -0.721 & 0.723 & 0.800 \\
+Mixed Int Decimal Kfold & gemini-embedding-001 & Google & -0.909 & -0.793 & -0.711 \\
+Mixed Int Decimal Kfold & text-embedding-3-large & OpenAI & -0.914 & 0.272 & -0.749 \\
+Mixed Int Decimal Kfold & text-embedding-3-small & OpenAI & -0.763 & 0.265 & -0.604 \\
+Mixed Int Decimal Kfold & text-embedding-ada-002 & OpenAI & -0.785 & 0.676 & -0.556 \\
+Mixed Int Decimal Kfold & voyage-3-large & Voyage & -0.661 & 0.465 & 0.866 \\
+Mixed Int Decimal Kfold & voyage-3.5 & Voyage & -0.651 & 0.296 & 0.002 \\
+Mixed Int Decimal Kfold & voyage-3.5-lite & Voyage & -0.497 & 0.322 & 0.860 \\
+Mixed Int Decimal Kfold & voyage-code-3 & Voyage & -0.912 & 0.205 & 0.959 \\
+Mixed Int Decimal Kfold & voyage-finance-2 & Voyage & -0.819 & 0.215 & 0.387 \\
+Mixed Int Decimal Kfold & voyage-law-2 & Voyage & -0.729 & 0.080 & 0.648 \\
+\bottomrule
+\end{tabular}
+\end{table}

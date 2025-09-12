@@ -1,0 +1,13 @@
+\begin{table}[htbp]
+\caption{Overall Correlation Analysis Across Experiments}
+\label{tab:overall_correlations}
+\begin{tabular}{lcccc}
+\toprule
+Experiment & Linear vs PCA R² & Size vs Linear R² & Size vs PCA R² & Size vs PCA Var \\
+\midrule
+Positive Decimals Kfold & 0.494 & -0.421 & -0.094 & -0.123 \\
+Mixed Sign Decimals Kfold & -0.003 & -0.304 & 0.274 & 0.027 \\
+Mixed Int Decimal Kfold & 0.916 & -0.293 & -0.058 & 0.051 \\
+\bottomrule
+\end{tabular}
+\end{table}

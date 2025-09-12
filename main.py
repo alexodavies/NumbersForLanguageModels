@@ -72,7 +72,16 @@ def main():
     # Similarity experiments
     parser.add_argument('--sweep-sims', action='store_true', help='Run similarity preservation experiments')
     parser.add_argument('--sims-demo', action='store_true', help='Quick similarity demo')
-    
+
+    # Periodicity experiments
+    parser.add_argument('--periodicity', action='store_true', help='Run FFT periodicity analysis')
+    parser.add_argument('--periodicity-demo', action='store_true', help='Quick periodicity demo')
+
+    # In main.py, add to argument parser:
+    parser.add_argument('--kfold', type=int, default=None, help='Enable k-fold CV with specified folds')
+
+
+
     args = parser.parse_args()
     
     # Quick mode adjustments
@@ -138,10 +147,16 @@ def main():
             print("🚀 Running similarity demo...")
             run_quick_similarity_demo(runner.wrapper, args.models)
             return 0
+
+        if args.periodicity_demo:
+            from periodicity import run_periodicity_demo
+            print("🚀 Running periodicity demo...")
+            run_periodicity_demo(runner.wrapper, args.models)
+            return 0
         
         if args.sweep:
-            from sweep_experiments import NumberSizeSweep, SweepConfig
-            print("🔬 Running sweep experiments...")
+            from sweep_experiments import SweepConfig
+            print("Running sweep experiments...")
             
             sweep_config = SweepConfig(
                 n_samples=args.samples,
@@ -149,34 +164,47 @@ def main():
                 results_dir=os.path.join(args.results_dir, "sweep")
             )
             
-            sweep = NumberSizeSweep(runner.wrapper, sweep_config)
+            # Choose between k-fold and regular sweep
+            if args.kfold:
+                from kfold import NumberSizeSweepKFold, KFoldConfig
+                k_fold_config = KFoldConfig(n_splits=args.kfold)
+                sweep = NumberSizeSweepKFold(runner.wrapper, sweep_config, k_fold_config)
+            else:
+                from sweep_experiments import NumberSizeSweep
+                sweep = NumberSizeSweepKFold(runner.wrapper, sweep_config)
             
-            # Filter models
+            # Filter models (this applies to both sweep types)
             if args.models:
                 available = set(sweep.available_models)
                 requested = set(args.models)
                 sweep.available_models = list(available & requested)
                 
                 if not sweep.available_models:
-                    print("❌ No valid models for sweep")
+                    print("No valid models for sweep")
                     return 1
             
-            # Run experiments
-            if args.quick:
-                # Just positive decimals for quick mode
-                sweep.run_decimal_sweep(positive_only=True)
+            # Run experiments based on sweep type
+            if args.kfold:
+                if args.quick:
+                    sweep.run_decimal_sweep_kfold(positive_only=True)
+                else:
+                    # Run all k-fold sweeps (this will include mixed int/decimal)
+                    sweep.run_all_sweeps_kfold()
+                    # Add mixed sweep when implemented
+                
+                # Use k-fold plotting and export methods
+                sweep.plot_kfold_results()
+                sweep.export_kfold_results()
             else:
-                # All sweep experiments
-                sweep.run_all_sweeps()
-            
-            # Create outputs
-            sweep.plot_sweep_results()
-            sweep.export_sweep_results()
-            sweep.save_sweep_report()
-            
-            # Print report
-            report = sweep.generate_sweep_report()
-            print("\n" + report)
+                # Use original methods
+                if args.quick:
+                    sweep.run_decimal_sweep(positive_only=True)
+                else:
+                    sweep.run_all_sweeps()
+                
+                sweep.plot_sweep_results()
+                sweep.export_sweep_results()
+                sweep.save_sweep_report()
             
             return 0
         
@@ -219,6 +247,35 @@ def main():
             # Print report
             report = similarity_exp.generate_similarity_report()
             print("\n" + report)
+            
+            return 0
+
+
+        if args.periodicity:
+            from periodicity import PeriodicityConfig, run_full_periodicity_analysis
+            print("📊 Running periodicity analysis...")
+            
+            periodicity_config = PeriodicityConfig(
+                n_samples=args.samples,
+                plot_dir=os.path.join(args.plot_dir, "ffts"),
+                results_dir=os.path.join(args.results_dir, "ffts")
+            )
+            
+            # Adjust for quick mode
+            if args.quick:
+                periodicity_config.n_samples = 100
+                periodicity_config.n_components_to_analyze = 50
+                periodicity_config.magnitude_ranges = [
+                    (10, 100),
+                    (100, 1000),
+                    (1000, 10000)
+                ]
+            
+            analyzer = run_full_periodicity_analysis(
+                runner.wrapper, 
+                periodicity_config, 
+                args.models
+            )
             
             return 0
         

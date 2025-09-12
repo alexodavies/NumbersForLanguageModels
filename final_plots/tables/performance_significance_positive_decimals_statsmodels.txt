@@ -1,0 +1,13 @@
+\begin{table}[htbp]
+\caption{Statsmodels Performance & Significance - Positive Decimals Statsmodels}
+\label{tab:statsmodels_positive_decimals_statsmodels}
+\begin{tabular}{lcccccc}
+\toprule
+Provider & Models & Linear R² (μ±σ) & PCA R² (μ±σ) & Sig. Features (%) & Avg F-p-value & Significant Models \\
+\midrule
+Google & 1 & 0.975±0.013 & 0.655±0.185 & 20.0% & 6.52e-14 & 5/19 \\
+OpenAI & 3 & 0.972±0.013 & 0.720±0.113 & 16.1% & 5.43e-14 & 13/57 \\
+Voyage & 6 & 0.991±0.008 & 0.808±0.254 & 23.9% & 4.94e-14 & 30/114 \\
+\bottomrule
+\end{tabular}
+\end{table}

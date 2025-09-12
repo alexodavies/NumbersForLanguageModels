@@ -1,0 +1,13 @@
+\begin{table}[htbp]
+\caption{Provider Performance Summary (All Experiments)}
+\label{tab:provider_summary}
+\begin{tabular}{lcccccc}
+\toprule
+Provider & Total Models & General Models & Specialist Models & Avg Linear R² & Avg PCA R² & Avg PCA Var \\
+\midrule
+Google & 1 & 1 & 0 & 0.873 & 0.471 & 0.042 \\
+OpenAI & 3 & 3 & 0 & 0.942 & 0.734 & 0.111 \\
+Voyage & 6 & 3 & 3 & 0.978 & 0.795 & 0.326 \\
+\bottomrule
+\end{tabular}
+\end{table}

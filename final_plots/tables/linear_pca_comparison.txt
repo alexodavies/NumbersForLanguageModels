@@ -1,0 +1,40 @@
+\begin{table}[htbp]
+\caption{Linear vs PCA Model Comparison}
+\label{tab:linear_pca_comparison}
+\begin{tabular}{llccccccc}
+\toprule
+Experiment & Provider & Model & Linear R² & PCA R² & Linear > PCA & Linear Sig % & PCA Sig % \\
+\midrule
+Positive Decimals Statsmodels & Google & gemini-embedding-001 & 0.9746 & 0.6549 & 18/19 & 20.0% & 100.0% \\
+Positive Decimals Statsmodels & OpenAI & text-embedding-3-large & 0.9746 & 0.7197 & 19/19 & 14.7% & 100.0% \\
+Positive Decimals Statsmodels & OpenAI & text-embedding-3-small & 0.9707 & 0.7575 & 19/19 & 17.9% & 100.0% \\
+Positive Decimals Statsmodels & OpenAI & text-embedding-ada-002 & 0.9694 & 0.6824 & 19/19 & 15.8% & 100.0% \\
+Positive Decimals Statsmodels & Voyage & voyage-3-large & 0.9970 & 0.9565 & 19/19 & 24.2% & 100.0% \\
+Positive Decimals Statsmodels & Voyage & voyage-3.5 & 0.9823 & 0.3403 & 19/19 & 24.2% & 100.0% \\
+Positive Decimals Statsmodels & Voyage & voyage-3.5-lite & 0.9816 & 0.7903 & 19/19 & 24.2% & 100.0% \\
+Positive Decimals Statsmodels & Voyage & voyage-code-3 & 0.9950 & 0.9588 & 19/19 & 24.2% & 100.0% \\
+Positive Decimals Statsmodels & Voyage & voyage-finance-2 & 0.9942 & 0.8500 & 19/19 & 22.1% & 100.0% \\
+Positive Decimals Statsmodels & Voyage & voyage-law-2 & 0.9965 & 0.9494 & 19/19 & 24.2% & 100.0% \\
+Mixed Sign Decimals Statsmodels & Google & gemini-embedding-001 & 0.9646 & 0.5833 & 19/19 & 18.9% & 32.6% \\
+Mixed Sign Decimals Statsmodels & OpenAI & text-embedding-3-large & 0.9616 & 0.7487 & 19/19 & 25.3% & 35.8% \\
+Mixed Sign Decimals Statsmodels & OpenAI & text-embedding-3-small & 0.9147 & 0.7384 & 19/19 & 18.9% & 35.8% \\
+Mixed Sign Decimals Statsmodels & OpenAI & text-embedding-ada-002 & 0.8977 & 0.7334 & 19/19 & 23.2% & 35.8% \\
+Mixed Sign Decimals Statsmodels & Voyage & voyage-3-large & 0.9956 & 0.7661 & 19/19 & 25.3% & 36.8% \\
+Mixed Sign Decimals Statsmodels & Voyage & voyage-3.5 & 0.9747 & 0.7601 & 19/19 & 25.3% & 35.8% \\
+Mixed Sign Decimals Statsmodels & Voyage & voyage-3.5-lite & 0.9686 & 0.7763 & 19/19 & 25.3% & 37.9% \\
+Mixed Sign Decimals Statsmodels & Voyage & voyage-code-3 & 0.9933 & 0.7678 & 19/19 & 25.3% & 37.9% \\
+Mixed Sign Decimals Statsmodels & Voyage & voyage-finance-2 & 0.9901 & 0.7539 & 19/19 & 25.3% & 35.8% \\
+Mixed Sign Decimals Statsmodels & Voyage & voyage-law-2 & 0.9953 & 0.7796 & 19/19 & 25.3% & 40.0% \\
+Mixed Int Decimal Statsmodels & Google & gemini-embedding-001 & 0.7346 & 0.1536 & 19/19 & 23.2% & 6.3% \\
+Mixed Int Decimal Statsmodels & OpenAI & text-embedding-3-large & 0.9564 & 0.7795 & 19/19 & 21.1% & 24.2% \\
+Mixed Int Decimal Statsmodels & OpenAI & text-embedding-3-small & 0.9415 & 0.7321 & 19/19 & 21.1% & 18.9% \\
+Mixed Int Decimal Statsmodels & OpenAI & text-embedding-ada-002 & 0.9427 & 0.7420 & 19/19 & 25.3% & 20.0% \\
+Mixed Int Decimal Statsmodels & Voyage & voyage-3-large & 0.9736 & 0.8028 & 19/19 & 21.1% & 27.4% \\
+Mixed Int Decimal Statsmodels & Voyage & voyage-3.5 & 0.9669 & 0.7996 & 19/19 & 21.1% & 24.2% \\
+Mixed Int Decimal Statsmodels & Voyage & voyage-3.5-lite & 0.9617 & 0.7611 & 19/19 & 20.5% & 22.1% \\
+Mixed Int Decimal Statsmodels & Voyage & voyage-code-3 & 0.9591 & 0.8109 & 19/19 & 21.1% & 28.4% \\
+Mixed Int Decimal Statsmodels & Voyage & voyage-finance-2 & 0.9755 & 0.8011 & 19/19 & 24.2% & 27.4% \\
+Mixed Int Decimal Statsmodels & Voyage & voyage-law-2 & 0.9727 & 0.8004 & 19/19 & 23.2% & 27.4% \\
+\bottomrule
+\end{tabular}
+\end{table}

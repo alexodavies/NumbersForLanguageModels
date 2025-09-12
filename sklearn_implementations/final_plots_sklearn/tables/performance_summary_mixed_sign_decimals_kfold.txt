@@ -1,0 +1,13 @@
+\begin{table}[htbp]
+\caption{Performance Summary - Mixed Sign Decimals Kfold}
+\label{tab:perf_mixed_sign_decimals_kfold}
+\begin{tabular}{lccccc}
+\toprule
+Provider & Models & Linear R² (μ±σ) & PCA R² (μ±σ) & PCA Var Comp 1 (μ±σ) \\
+\midrule
+Google & 1 & 0.965±0.017 & 0.583±0.264 & 0.044±0.026 \\
+OpenAI & 3 & 0.925±0.043 & 0.740±0.018 & 0.174±0.028 \\
+Voyage & 6 & 0.986±0.014 & 0.767±0.020 & 0.422±0.058 \\
+\bottomrule
+\end{tabular}
+\end{table}

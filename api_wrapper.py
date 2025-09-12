@@ -65,7 +65,6 @@ class EmbeddingWrapper:
         'voyage-code-3',
         'voyage-finance-2',
         'voyage-law-2',
-        'voyage-multimodal-3'
     }
     
     def __init__(self, 
@@ -146,13 +145,37 @@ class EmbeddingWrapper:
                 dim = dimensions or (1536 if model == 'text-embedding-3-small' else 3072)
                 return [[0.0] * dim for _ in texts]
         
-        # Prepare parameters
-        params = {'input': text, 'model': model}
-        if 'dimensions' in kwargs:
-            params['dimensions'] = kwargs['dimensions']
+        # # Prepare parameters
+        # params = {'input': text, 'model': model}
+        # if 'dimensions' in kwargs:
+        #     params['dimensions'] = kwargs['dimensions']
             
-        response = self.openai_client.embeddings.create(**params)
-        return [item.embedding for item in response.data]
+        # response = self.openai_client.embeddings.create(**params)
+        # return [item.embedding for item in response.data]
+
+
+                # Google's batch limit is 100 requests
+        OPENAI_BATCH_SIZE = 500
+        all_embeddings = []
+        
+        # Process in batches
+        for i in range(0, len(text), OPENAI_BATCH_SIZE):
+            batch = text[i:i + OPENAI_BATCH_SIZE]
+            
+            # Add small delay between batches to respect rate limits
+            if i > 0:
+                import time
+                time.sleep(0.1)
+
+            result = self.openai_client.embeddings.create(
+                input = batch, 
+                model = model
+            )
+            
+            batch_embeddings = [emb.embedding for emb in result.data]
+            all_embeddings.extend(batch_embeddings)
+        
+        return all_embeddings
     
     def _google_embed(self, 
                     text: Union[str, List[str]], 
@@ -192,7 +215,7 @@ class EmbeddingWrapper:
             # Add small delay between batches to respect rate limits
             if i > 0:
                 import time
-                time.sleep(0.1)
+                time.sleep(0.25)
             
             try:
                 result = self.google_client.models.embed_content(
@@ -239,13 +262,34 @@ class EmbeddingWrapper:
         texts = [text] if isinstance(text, str) else text
         input_type = kwargs.get('input_type', 'document')
         
-        result = self.voyage_client.embed(
-            texts, 
-            model=model, 
-            input_type=input_type
-        )
+        # Google's batch limit is 100 requests
+        VOYAGE_BATCH_SIZE = 500
+        all_embeddings = []
         
-        return result.embeddings
+        # Process in batches
+        for i in range(0, len(texts), VOYAGE_BATCH_SIZE):
+            batch = texts[i:i + VOYAGE_BATCH_SIZE]
+            
+            # Add small delay between batches to respect rate limits
+            if i > 0:
+                import time
+                time.sleep(0.1)
+
+            result = self.voyage_client.embed(
+                batch, 
+                model=model, 
+                input_type=input_type
+            )
+            
+            batch_embeddings = [emb for emb in result.embeddings]
+            all_embeddings.extend(batch_embeddings)
+        
+        return all_embeddings
+
+
+
+        
+        # return result.embeddings
     
     def embed(self, 
               text: Union[str, List[str]], 

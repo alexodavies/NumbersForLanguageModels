@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\caption{Model Overview by Provider}
+\label{tab:model_overview}
+\begin{tabular}{llcc}
+\toprule
+Provider & Model & Type & Size Range \\
+\midrule
+Google & gemini-embedding-001 & General & 1-19 \\
+OpenAI & text-embedding-3-large & General & 1-19 \\
+OpenAI & text-embedding-3-small & General & 1-19 \\
+OpenAI & text-embedding-ada-002 & General & 1-19 \\
+Voyage & voyage-3-large & General & 1-19 \\
+Voyage & voyage-3.5 & General & 1-19 \\
+Voyage & voyage-3.5-lite & General & 1-19 \\
+Voyage & voyage-code-3 & Specialist & 1-19 \\
+Voyage & voyage-finance-2 & Specialist & 1-19 \\
+Voyage & voyage-law-2 & Specialist & 1-19 \\
+\bottomrule
+\end{tabular}
+\end{table}

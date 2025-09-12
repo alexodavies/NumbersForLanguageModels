@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+\caption{Statistical Significance by Size - Positive Decimals Statsmodels}
+\label{tab:significance_positive_decimals_statsmodels}
+\begin{tabular}{cccccc}
+\toprule
+Size & Models Tested & Significant F-tests & Best Model (Sig %) & Worst Model (Sig %) & Avg Sig Features \\
+\midrule
+1 & 10 & 10/10 & voyage-3.5... (100.0%) & text-embedding-3-lar... (0.0%) & 56.0%±49.7% \\
+2 & 10 & 10/10 & text-embedding-3-lar... (100.0%) & text-embedding-3-lar... (100.0%) & 100.0%±0.0% \\
+3 & 10 & 10/10 & text-embedding-3-lar... (100.0%) & text-embedding-3-lar... (100.0%) & 100.0%±0.0% \\
+4 & 10 & 10/10 & text-embedding-ada-0... (100.0%) & text-embedding-3-lar... (80.0%) & 96.0%±8.4% \\
+5 & 10 & 8/10 & text-embedding-3-sma... (60.0%) & text-embedding-3-lar... (0.0%) & 48.0%±25.3% \\
+6 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+7 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+8 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+9 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+10 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+11 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+12 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+13 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+14 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+15 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+16 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+17 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+18 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+19 & 10 & 0/10 & text-embedding-3-lar... (0.0%) & text-embedding-3-lar... (0.0%) & 0.0%±0.0% \\
+\bottomrule
+\end{tabular}
+\end{table}

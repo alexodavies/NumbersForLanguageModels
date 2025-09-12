@@ -1,0 +1,13 @@
+\begin{table}[htbp]
+\caption{Performance Summary - Positive Decimals Kfold}
+\label{tab:perf_positive_decimals_kfold}
+\begin{tabular}{lccccc}
+\toprule
+Provider & Models & Linear R² (μ±σ) & PCA R² (μ±σ) & PCA Var Comp 1 (μ±σ) \\
+\midrule
+Google & 1 & 0.974±0.013 & 0.640±0.191 & 0.049±0.041 \\
+OpenAI & 3 & 0.972±0.013 & 0.720±0.113 & 0.054±0.033 \\
+Voyage & 6 & 0.991±0.008 & 0.808±0.254 & 0.209±0.041 \\
+\bottomrule
+\end{tabular}
+\end{table}

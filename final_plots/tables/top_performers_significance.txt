@@ -1,0 +1,40 @@
+\begin{table}[htbp]
+\caption{Top Models by Statistical Significance}
+\label{tab:top_significance}
+\begin{tabular}{cllccccc}
+\toprule
+Rank & Experiment & Model & Provider & Size & Sig Features & Linear R² & F-p-value \\
+\midrule
+1 & Positive Decimals Statsmodels & voyage-law-2 & Voyage & 1 & 100.0% & 1.0000 & 0.00e+00 \\
+2 & Positive Decimals Statsmodels & voyage-3.5 & Voyage & 4 & 100.0% & 0.9878 & 4.05e-52 \\
+3 & Positive Decimals Statsmodels & voyage-finance-2 & Voyage & 4 & 100.0% & 0.9974 & 1.79e-39 \\
+4 & Positive Decimals Statsmodels & voyage-finance-2 & Voyage & 3 & 100.0% & 0.9978 & 0.00e+00 \\
+5 & Positive Decimals Statsmodels & voyage-finance-2 & Voyage & 2 & 100.0% & 0.9999 & 0.00e+00 \\
+6 & Positive Decimals Statsmodels & voyage-law-2 & Voyage & 4 & 100.0% & 0.9974 & 4.00e-37 \\
+7 & Positive Decimals Statsmodels & voyage-law-2 & Voyage & 3 & 100.0% & 0.9988 & 0.00e+00 \\
+8 & Positive Decimals Statsmodels & voyage-law-2 & Voyage & 2 & 100.0% & 1.0000 & 0.00e+00 \\
+9 & Positive Decimals Statsmodels & text-embedding-3-large & OpenAI & 2 & 100.0% & 1.0000 & 0.00e+00 \\
+10 & Positive Decimals Statsmodels & voyage-3.5 & Voyage & 3 & 100.0% & 0.9922 & 0.00e+00 \\
+1 & Mixed Sign Decimals Statsmodels & text-embedding-3-large & OpenAI & 1 & 100.0% & 1.0000 & 0.00e+00 \\
+2 & Mixed Sign Decimals Statsmodels & text-embedding-ada-002 & OpenAI & 2 & 100.0% & 0.9832 & 0.00e+00 \\
+3 & Mixed Sign Decimals Statsmodels & text-embedding-ada-002 & OpenAI & 4 & 100.0% & 0.9071 & 2.81e-28 \\
+4 & Mixed Sign Decimals Statsmodels & gemini-embedding-001 & Google & 3 & 100.0% & 0.9843 & 0.00e+00 \\
+5 & Mixed Sign Decimals Statsmodels & gemini-embedding-001 & Google & 4 & 100.0% & 0.9792 & 4.37e-28 \\
+6 & Mixed Sign Decimals Statsmodels & voyage-3.5 & Voyage & 1 & 100.0% & 1.0000 & 0.00e+00 \\
+7 & Mixed Sign Decimals Statsmodels & voyage-3.5 & Voyage & 2 & 100.0% & 0.9937 & 0.00e+00 \\
+8 & Mixed Sign Decimals Statsmodels & voyage-3.5 & Voyage & 3 & 100.0% & 0.9800 & 1.09e-214 \\
+9 & Mixed Sign Decimals Statsmodels & voyage-3.5 & Voyage & 4 & 100.0% & 0.9788 & 4.46e-14 \\
+10 & Mixed Sign Decimals Statsmodels & text-embedding-3-large & OpenAI & 2 & 100.0% & 0.9970 & 0.00e+00 \\
+1 & Mixed Int Decimal Statsmodels & text-embedding-3-large & OpenAI & 1 & 100.0% & 1.0000 & 0.00e+00 \\
+2 & Mixed Int Decimal Statsmodels & text-embedding-3-small & OpenAI & 1 & 100.0% & 1.0000 & 0.00e+00 \\
+3 & Mixed Int Decimal Statsmodels & text-embedding-3-small & OpenAI & 3 & 100.0% & 0.9850 & 5.48e-203 \\
+4 & Mixed Int Decimal Statsmodels & text-embedding-3-small & OpenAI & 4 & 100.0% & 0.9575 & 1.84e-28 \\
+5 & Mixed Int Decimal Statsmodels & voyage-law-2 & Voyage & 3 & 100.0% & 0.9837 & 1.51e-218 \\
+6 & Mixed Int Decimal Statsmodels & voyage-law-2 & Voyage & 2 & 100.0% & 0.9991 & 0.00e+00 \\
+7 & Mixed Int Decimal Statsmodels & text-embedding-3-large & OpenAI & 2 & 100.0% & 0.9989 & 0.00e+00 \\
+8 & Mixed Int Decimal Statsmodels & voyage-3.5 & Voyage & 4 & 100.0% & 0.9592 & 4.61e-14 \\
+9 & Mixed Int Decimal Statsmodels & voyage-3.5 & Voyage & 3 & 100.0% & 0.9848 & 2.70e-275 \\
+10 & Mixed Int Decimal Statsmodels & voyage-3.5 & Voyage & 2 & 100.0% & 0.9986 & 0.00e+00 \\
+\bottomrule
+\end{tabular}
+\end{table}

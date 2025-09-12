@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+\caption{Best Performing Models by Size - Mixed Int Decimal Kfold}
+\label{tab:best_mixed_int_decimal_kfold}
+\begin{tabular}{ccccc}
+\toprule
+Size & Best Linear Model & Linear R² & Best PCA Model & PCA R² \\
+\midrule
+1 & text-embedding-3-small & 0.9990 & voyage-finance-2 & 0.7334 \\
+2 & voyage-law-2 & 0.9948 & voyage-code-3 & 0.8882 \\
+3 & voyage-finance-2 & 0.9837 & voyage-code-3 & 0.8274 \\
+4 & voyage-finance-2 & 0.9792 & voyage-code-3 & 0.8227 \\
+5 & voyage-finance-2 & 0.9785 & voyage-code-3 & 0.8135 \\
+6 & voyage-finance-2 & 0.9702 & voyage-3.5 & 0.8318 \\
+7 & voyage-3-large & 0.9719 & voyage-finance-2 & 0.8202 \\
+8 & voyage-finance-2 & 0.9701 & voyage-3.5 & 0.8273 \\
+9 & voyage-3-large & 0.9697 & voyage-3.5 & 0.8370 \\
+10 & voyage-3-large & 0.9639 & voyage-3.5-lite & 0.8355 \\
+11 & voyage-3-large & 0.9681 & voyage-3.5-lite & 0.8208 \\
+12 & voyage-finance-2 & 0.9567 & voyage-code-3 & 0.8217 \\
+13 & voyage-3-large & 0.9673 & voyage-code-3 & 0.8306 \\
+14 & voyage-law-2 & 0.9712 & voyage-3.5-lite & 0.8214 \\
+15 & voyage-3-large & 0.9672 & voyage-finance-2 & 0.8310 \\
+16 & voyage-law-2 & 0.9648 & voyage-finance-2 & 0.8295 \\
+17 & voyage-3.5-lite & 0.9603 & voyage-code-3 & 0.8428 \\
+18 & voyage-3-large & 0.9605 & voyage-finance-2 & 0.8156 \\
+19 & voyage-3-large & 0.9719 & voyage-3.5 & 0.8230 \\
+\bottomrule
+\end{tabular}
+\end{table}
