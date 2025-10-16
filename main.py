@@ -3,7 +3,7 @@
 Fixed Main Script for Embedding Reconstruction Experiments
 
 This version is simplified and properly integrated with the cache system.
-Updated with similarity experiments support.
+Updated with similarity experiments and format comparison support.
 """
 
 import os
@@ -68,6 +68,9 @@ def main():
     # Sweep experiments
     parser.add_argument('--sweep', action='store_true', help='Run size sweep experiments')
     parser.add_argument('--sweep-demo', action='store_true', help='Quick sweep demo')
+    parser.add_argument('--format-comparison', action='store_true', help='Run format comparison experiment')
+    parser.add_argument('--format-size-sweep', action='store_true', help='Run format×size sweep (1-20 places)')
+    parser.add_argument('--size-range', nargs='+', type=int, help='Custom size range for format-size-sweep')
     
     # Similarity experiments
     parser.add_argument('--sweep-sims', action='store_true', help='Run similarity preservation experiments')
@@ -77,10 +80,8 @@ def main():
     parser.add_argument('--periodicity', action='store_true', help='Run FFT periodicity analysis')
     parser.add_argument('--periodicity-demo', action='store_true', help='Quick periodicity demo')
 
-    # In main.py, add to argument parser:
+    # K-fold cross-validation
     parser.add_argument('--kfold', type=int, default=None, help='Enable k-fold CV with specified folds')
-
-
 
     args = parser.parse_args()
     
@@ -137,7 +138,7 @@ def main():
         
         # Handle special modes
         if args.sweep_demo:
-            from sweep_experiments import run_quick_sweep_demo
+            from format_sweep import run_quick_sweep_demo
             print("🚀 Running sweep demo...")
             run_quick_sweep_demo(runner.wrapper, args.models)
             return 0
@@ -154,8 +155,92 @@ def main():
             run_periodicity_demo(runner.wrapper, args.models)
             return 0
         
+        # NEW: Format comparison experiment
+        if args.format_comparison:
+            from format_sweep import NumberSizeSweep, SweepConfig
+            print("🔬 Running format comparison experiment...")
+            
+            sweep_config = SweepConfig(
+                n_samples=args.samples,
+                plot_dir=os.path.join(args.plot_dir, "format_comparison"),
+                results_dir=os.path.join(args.results_dir, "format_comparison")
+            )
+            
+            sweep = NumberSizeSweep(runner.wrapper, sweep_config)
+            
+            # Filter models
+            if args.models:
+                available = set(sweep.available_models)
+                requested = set(args.models)
+                sweep.available_models = list(available & requested)
+                
+                if not sweep.available_models:
+                    print("❌ No valid models for format comparison")
+                    return 1
+            
+            # Run format comparison
+            sweep.run_format_comparison()
+            
+            # Create outputs
+            sweep.plot_sweep_results('format_comparison')
+            sweep.export_sweep_results()
+            sweep.save_sweep_report()
+            
+            # Print report
+            report = sweep.generate_sweep_report()
+            print("\n" + report)
+            
+            return 0
+        
+        # NEW: Format×size sweep
+        if args.format_size_sweep:
+            from format_sweep import NumberSizeSweep, SweepConfig
+            print("🔬 Running format×size sweep...")
+            
+            sweep_config = SweepConfig(
+                n_samples=args.samples,
+                plot_dir=os.path.join(args.plot_dir, "format_size_sweep"),
+                results_dir=os.path.join(args.results_dir, "format_size_sweep")
+            )
+            
+            sweep = NumberSizeSweep(runner.wrapper, sweep_config)
+            
+            # Filter models
+            if args.models:
+                available = set(sweep.available_models)
+                requested = set(args.models)
+                sweep.available_models = list(available & requested)
+                
+                if not sweep.available_models:
+                    print("❌ No valid models for format×size sweep")
+                    return 1
+            
+            # Run format×size sweep with optional custom range and k-fold
+            size_range = args.size_range if args.size_range else None
+            if size_range:
+                print(f"Using custom size range: {size_range}")
+            
+            if args.kfold:
+                print(f"Using {args.kfold}-fold cross-validation")
+                sweep.run_format_size_sweep_kfold(size_range=size_range, n_splits=args.kfold)
+                exp_name = 'format_size_sweep_kfold'
+            else:
+                sweep.run_format_size_sweep(size_range=size_range)
+                exp_name = 'format_size_sweep'
+            
+            # Create outputs
+            sweep.plot_sweep_results(exp_name)
+            sweep.export_sweep_results()
+            sweep.save_sweep_report()
+            
+            # Print report
+            report = sweep.generate_sweep_report()
+            print("\n" + report)
+            
+            return 0
+        
         if args.sweep:
-            from sweep_experiments import SweepConfig
+            from format_sweep import SweepConfig
             print("Running sweep experiments...")
             
             sweep_config = SweepConfig(
@@ -170,8 +255,8 @@ def main():
                 k_fold_config = KFoldConfig(n_splits=args.kfold)
                 sweep = NumberSizeSweepKFold(runner.wrapper, sweep_config, k_fold_config)
             else:
-                from sweep_experiments import NumberSizeSweep
-                sweep = NumberSizeSweepKFold(runner.wrapper, sweep_config)
+                from format_sweep import NumberSizeSweep
+                sweep = NumberSizeSweep(runner.wrapper, sweep_config)
             
             # Filter models (this applies to both sweep types)
             if args.models:

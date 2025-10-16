@@ -1,0 +1,11 @@
+SWEEP RESULTS SUMMARY
+============================================================
+
+EXPERIMENT: FORMAT_SIZE_SWEEP_KFOLD
+--------------------------------------------------
+
+voyage-3-large:
+  standard            : Mean R² = 0.899
+  scientific_3sf      : Mean R² = 0.971
+  written_words       : Mean R² = 0.967
+  rounded_3sf         : Mean R² = 0.876

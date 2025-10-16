@@ -215,7 +215,7 @@ class EmbeddingWrapper:
             # Add small delay between batches to respect rate limits
             if i > 0:
                 import time
-                time.sleep(0.25)
+                time.sleep(1)
             
             try:
                 result = self.google_client.models.embed_content(

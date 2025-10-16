@@ -1,0 +1,12 @@
+SWEEP RESULTS SUMMARY
+============================================================
+
+EXPERIMENT: FORMAT_COMPARISON
+--------------------------------------------------
+
+gemini-embedding-001:
+  standard            : R² = -0.451
+  scientific_3sf      : R² = 0.632
+  rounded_3sf         : R² = 0.682
+  written_words       : R² = 0.613
+  → Best: rounded_3sf (0.682)
